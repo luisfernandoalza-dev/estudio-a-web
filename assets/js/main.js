@@ -91,17 +91,34 @@ const counterObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       const el = entry.target;
-      const text = el.textContent;
-      const num = parseInt(text);
-      const suffix = text.replace(/[0-9]/g, '');
-      if (!isNaN(num)) {
+      // Support data-raw for formatted numbers (e.g. 1.835)
+      const rawVal  = el.dataset.raw ? parseInt(el.dataset.raw) : null;
+      const fmt     = el.dataset.format || '';
+      const original = el.textContent.trim();
+      const num     = rawVal !== null ? rawVal : parseInt(original.replace(/[^0-9]/g, ''));
+      const prefix  = rawVal !== null ? '' : (original.match(/^[^0-9]*/)?.[0] || '');
+      const suffix  = rawVal !== null ? '' : original.replace(/^[^0-9]*[0-9.,]+/, '');
+
+      function formatNum(n) {
+        if (fmt === 'thousands') {
+          // Format as X.XXX (dot as thousands separator, Argentine style)
+          return n.toLocaleString('es-AR').replace(/,/g, '.');
+        }
+        return prefix + n + suffix;
+      }
+
+      if (!isNaN(num) && num > 0) {
         let current = 0;
-        const step = num / 40;
+        const steps = 50;
+        const step = num / steps;
         const timer = setInterval(() => {
           current = Math.min(current + step, num);
-          el.textContent = Math.round(current) + suffix;
-          if (current >= num) clearInterval(timer);
-        }, 30);
+          el.textContent = formatNum(Math.round(current));
+          if (current >= num) {
+            el.textContent = formatNum(num);
+            clearInterval(timer);
+          }
+        }, 25);
       }
       counterObserver.unobserve(el);
     }
@@ -118,3 +135,22 @@ document.querySelector('.form-btn')?.addEventListener('click', function() {
     this.style.background = '';
   }, 3000);
 });
+
+// ─── Random order for founders ─────────────────────────
+(function() {
+  const grid = document.getElementById('founders-grid');
+  if (!grid) return;
+  const cards = Array.from(grid.children);
+  // Fisher-Yates shuffle
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    grid.appendChild(cards[j]);
+    cards.splice(j, 1);
+  }
+  // Re-apply reveal delays in new order
+  Array.from(grid.children).forEach((card, idx) => {
+    card.classList.remove('reveal-delay-1','reveal-delay-2','reveal-delay-3');
+    if (idx === 1) card.classList.add('reveal-delay-1');
+    if (idx === 2) card.classList.add('reveal-delay-2');
+  });
+})();

@@ -1184,8 +1184,8 @@ nav.scrolled {
   background-position: right 12px center;
   background-size: 20px;
   cursor: pointer;
-  option { background: var(--carbon); }
 }
+.form-select option { background: var(--carbon); }
 .form-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   font-family: var(--font-display);
@@ -1344,3 +1344,63 @@ footer {
   .proceso-steps { grid-template-columns: 1fr 1fr; }
   .dif-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
 }
+
+
+
+/* ── DESKTOP FONT & CONTRAST FIXES ─────────────────────── */
+@media (min-width: 900px) {
+  .nav-links a { font-size: 0.72rem; }
+  .t-label { font-size: 0.72rem; }
+  .method-step-body { font-size: 0.95rem; }
+  .service-body { font-size: 0.88rem; }
+  .service-item { font-size: 0.80rem; }
+  .pillar-body { font-size: 0.92rem; }
+  .proceso-step-body { font-size: 0.82rem; }
+  .team-bio { font-size: 0.88rem; }
+  .footer-link { font-size: 0.88rem; }
+  .footer-description { font-size: 0.88rem; }
+  .footer-copy { font-size: 0.80rem; }
+  .dif-label { font-size: 0.72rem; }
+  .contact-item-value { font-size: 0.95rem; }
+  .contact-item-label { font-size: 0.62rem; }
+  .japandi-quote blockquote { font-size: 1.4rem; }
+}
+
+/* ── CONTRAST FIXES: text visibility ───────────────────── */
+.hero-body { color: #d8d8d8; }
+.hero-stat-label { color: #bcbdc2; }
+.method-step-body { color: #d0d0d0; }
+.pillar-body { color: #d0d0d0; }
+.proceso-step-body { color: #bcbdc2; }
+.t-body { color: #d0d0d0; }
+.service-body { color: #d0d0d0; }
+.service-item { color: #bcbdc2; }
+.team-bio { color: #d0d0d0; }
+.footer-description { color: #9a9a9a; }
+.footer-link { color: #9a9a9a; }
+.footer-copy { color: #9a9a9a; }
+
+/* ── CONTACT ITEMS ──────────────────────────────────────── */
+.contact-info p { color: #d0d0d0; }
+.contact-item-value { color: #ffffff; font-weight: 400; }
+
+/* ── TICKER (ensure readable) ───────────────────────────── */
+.ticker-item { font-size: 0.68rem; color: #1c1c1c; }
+
+/* ── HERO RIGHT LABEL ───────────────────────────────────── */
+.hero-right-label { color: rgba(255,255,255,0.55); font-size: 0.62rem; }
+
+/* ── SECTION TITLES ─────────────────────────────────────── */
+.section-title { line-height: 1.12; }
+.section-title em { color: var(--ocre1); }
+
+/* ── TEAM hover border sage for collab ─────────────────── */
+.team-card:hover .team-info[style*="sage"] { border-color: var(--sage) !important; }
+
+/* ── JAPANDI QUOTE visibility ───────────────────────────── */
+.japandi-quote blockquote { color: #f0ece6; }
+.japandi-quote cite { color: var(--ocre2); }
+
+
+/* Performance & media defaults */
+img { height: auto; }
